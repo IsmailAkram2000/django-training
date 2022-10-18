@@ -1,5 +1,3 @@
-import datetime
-from email.policy import default
 from django.utils import timezone
 from django.db import models
 from artists.models import Artist
