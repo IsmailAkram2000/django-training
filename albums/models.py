@@ -10,6 +10,7 @@ class Albums(models.Model):
     creation_date = models.DateTimeField(default = timezone.now)
     release_date =  models.DateTimeField(blank = False)
     cost = models.DecimalField(max_digits = 10, decimal_places = 2, blank = False)
+    approved = models.BooleanField(default = False)
 
     def __str__(self):
         return f"name: {self.name}, creation_date: {self.creation_date}, release_date: {self.release_date}, cost: {self.cost}"
