@@ -1,12 +1,11 @@
-from django.forms import ModelForm
+from django import forms
 from django.contrib import admin
 from .models import Albums
 
-
-class AlnumModel(admin.StackedInline):
+class AlbumsInline(admin.StackedInline):
     model = Albums
 
-class AlbumForm(ModelForm):
+class AlbumForm(forms.ModelForm):
     class Meta:
         help_texts = {'approved': "Approve the album if its name is not explicit",}
 

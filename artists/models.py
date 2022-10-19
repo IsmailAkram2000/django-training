@@ -1,4 +1,3 @@
-from email.policy import default
 from django.db import models
 
 class Artist(models.Model):
@@ -7,6 +6,9 @@ class Artist(models.Model):
 
     def __str__(self):
         return f"Stage_name: {self.Stage_name}, Social_link: {self.Social_link}"
-    
+
+    def approved_albums(self):
+        return self.albums_set.filter(approved = True).count()
+
     class Meta:
         ordering = ('Stage_name',)
