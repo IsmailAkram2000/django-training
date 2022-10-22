@@ -1,4 +1,3 @@
-from enum import unique
 from django import forms
 
 class artistForm(forms.Form):
