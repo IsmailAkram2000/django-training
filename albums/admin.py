@@ -11,7 +11,7 @@ class AlbumForm(forms.ModelForm):
 
 class AlbumAdmin(admin.ModelAdmin):
     form = AlbumForm
-    list_display=['artist','name','creation_date','release_date','cost','approved',]
-    readonly_fields=['creation_date']
+    list_display=['artist','name','release_date','cost','approved',]
+    # readonly_fields=['creation_date']
 
 admin.site.register(Albums, AlbumAdmin)
