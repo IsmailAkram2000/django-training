@@ -4,7 +4,9 @@ from .forms import artistForm
 from .models import Artist
 
 def artist(request):
-    return HttpResponse('Welcome From Artist Page.')
+    data = Artist.objects.all().prefetch_related('albums_set')
+    return render(request, 'getAllArtist.html', {'allArtist': data})
+    
 
 def createArtist(request):
     if request.method == 'POST':

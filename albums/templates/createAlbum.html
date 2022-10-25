@@ -14,8 +14,14 @@
   {% csrf_token%}
 
   <!-- Add the Album Form -->
-  {{albumForm}}
+  {% for field in albumForm %}
+  <div style="color: #000; padding: 10px">
+    {% if field.errors %} {% for error in field.errors %}
+    <p style="color: red">{{ error }}</p>
+    {% endfor %} {% endif %} {{field.label_tag}} {{field}}
+  </div>
+  {% endfor %}
 
   <!-- save The album -->
-  <input type="submit" value="save" />
+  <input type="submit" value="save" style="margin: 10px" />
 </form>

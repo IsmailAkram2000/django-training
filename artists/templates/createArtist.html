@@ -11,10 +11,18 @@
 </h1>
 
 <form method="POST">
-  {% csrf_token%}
+  {% csrf_token %}
 
   <!-- Add the Artist Form -->
-  {{artistForm}}
+  {% for field in artistForm %}
+  <div style="color: #000; padding: 10px">
+    {% if field.errors %} {% for error in field.errors %}
+    <p style="color: red">{{ error }}</p>
+    {% endfor %} {% endif %} {{field.label_tag}} {{field}}
+  </div>
+  {% endfor %}
+
+  <!-- {{artistForm}} -->
 
   <!-- save The artist -->
   <input type="submit" value="save" />
