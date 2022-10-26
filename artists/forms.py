@@ -1,4 +1,3 @@
-from dataclasses import field
 from django import forms
 from .models import Artist
 
@@ -9,8 +8,8 @@ class artistForm(forms.ModelForm):
 
     def clean_Stage_name(self):
         Stage_name = self.cleaned_data.get('Stage_name')
-        print(Stage_name)
+        query = Artist.objects.filter(Stage_name = Stage_name).count()
 
-        if(Stage_name == 'A'):
-            raise forms.ValidationError('Change stage name .')
+        if(query > 0):
+            raise forms.ValidationError('Stage name must be unique.')
         return Stage_name

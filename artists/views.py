@@ -10,10 +10,10 @@ def artist(request):
 
 def createArtist(request):
     if request.method == 'POST':
-        Stage_name = request.POST.get('Stage_name')
-        Social_link = request.POST.get('Social_link')
+        newArtist = artistForm(request.POST)
+        if newArtist.is_valid():
+            newArtist.save()
+    else:
+        newArtist = artistForm()
 
-        newArtist = Artist(Stage_name = Stage_name, Social_link = Social_link)
-        newArtist.save()
-
-    return render(request, 'createArtist.html', {'artistForm': artistForm})
+    return render(request, 'createArtist.html', {'artistForm': newArtist})
