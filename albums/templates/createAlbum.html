@@ -1,0 +1,27 @@
+<h1
+  style="
+    border: 1px solid #000;
+    background-color: blueviolet;
+    text-align: center;
+    color: #000;
+    padding: 10px;
+  "
+>
+  Create Album
+</h1>
+
+<form method="POST">
+  {% csrf_token%}
+
+  <!-- Add the Album Form -->
+  {% for field in albumForm %}
+  <div style="color: #000; padding: 10px">
+    {% if field.errors %} {% for error in field.errors %}
+    <p style="color: red">{{ error }}</p>
+    {% endfor %} {% endif %} {{field.label_tag}} {{field}}
+  </div>
+  {% endfor %}
+
+  <!-- save The album -->
+  <input style="margin: 10px" type="submit" value="save" />
+</form>
