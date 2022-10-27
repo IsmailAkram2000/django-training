@@ -12,11 +12,17 @@ class createAlbum(View):
     template = 'createAlbum.html'
 
     def get(self, request):
-        newAlbum = self.form()
-        return render(request, self.template, {'albumForm': newAlbum})
+        if request.user.is_authenticated:
+            newAlbum = self.form()
+            return render(request, self.template, {'albumForm': newAlbum})
+        else:
+            return HttpResponse('Unauthenticated user, please login to access this page.')
 
     def post(self, request):
-        newAlbum = self.form(request.POST)
-        if newAlbum.is_valid():
-            newAlbum.save()
-        return render(request, self.template, {'albumForm': newAlbum})
+        if request.user.is_authenticated:
+            newAlbum = self.form(request.POST)
+            if newAlbum.is_valid():
+                newAlbum.save()
+            return render(request, self.template, {'albumForm': newAlbum})
+        else:
+            return HttpResponse('Unauthenticated user, please login to access this page.')

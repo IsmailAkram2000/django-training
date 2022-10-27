@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from .forms import artistForm
 from .models import Artist
@@ -18,11 +19,17 @@ class createArtist(View):
     template = 'createArtist.html'
 
     def get(self, request):
-        newArtist = self.form()
-        return render(request, self.template, {'artistForm': newArtist})
+        if request.user.is_authenticated:
+            newArtist = self.form()
+            return render(request, self.template, {'artistForm': newArtist})
+        else:
+            return HttpResponse('Unauthenticated user, please login to access this page.')
 
     def post(self, request):
-        newArtist = self.form(request.POST)
-        if newArtist.is_valid():
-            newArtist.save()
-        return render(request, self.template, {'artistForm': newArtist})
+        if request.user.is_authenticated:
+            newArtist = self.form(request.POST)
+            if newArtist.is_valid():
+                newArtist.save()
+            return render(request, self.template, {'artistForm': newArtist})
+        else:
+            return HttpResponse('Unauthenticated user, please login to access this page.')
