@@ -1,0 +1,21 @@
+<h1>All Artist:</h1>
+<ul>
+  {% for artist in allArtist %}
+  <li>id: {{artist.id}}</li>
+  <li>Stage name: {{artist.Stage_name}}</li>
+  <li>Social: {{artist.Social_link}}</li>
+  <li>Albums: {{artist.artist}}</li>
+  <ul>
+    {% for album in artist.albums_set.all %}
+    <li>id: {{album.id}}</li>
+    <li>Name: {{album.name}}</li>
+    <li>Creation Time: {{album.created}}</li>
+    <li>Release datetime: {{album.release_date}}</li>
+    <li>Cost: {{album.cost}}</li>
+    <li>Approved: {{ album.approved }}</li>
+    <br />
+    {%endfor%}
+  </ul>
+  <br />
+  {% endfor %}
+</ul>
