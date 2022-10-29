@@ -19,6 +19,7 @@ class AlbumAdmin(admin.ModelAdmin):
     readonly_fields = ['created']
     list_display=['artist','name','release_date','cost','approved',]
 
+
 class SongAdmin(admin.ModelAdmin):
     list_display = ['album', 'name', 'image', 'image_thumbnail', 'audio'] 
 
