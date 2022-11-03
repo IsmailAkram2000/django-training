@@ -1,5 +1,4 @@
 """musicplatform URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
 Examples:
@@ -22,6 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('artists/', include('artists.urls')),
     path('albums/', include('albums.urls')),
-    path('', include('django.contrib.auth.urls')),
     path('', include('members.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
