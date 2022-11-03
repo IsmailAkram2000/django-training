@@ -1,17 +1,28 @@
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views import View
+from .serializers import ArtistSerializer
 from .forms import artistForm
 from .models import Artist
-from django.views import View
 
-class allArtists(View):
+class allArtists(APIView):
     form = artistForm
     template = 'getAllArtist.html'
     model = Artist
-    
-    def get(self, request):
-        data = self.model.objects.all().prefetch_related('albums_set')
-        return render(request, self.template, {'allArtist': data})
+
+    def get(self, request, format=None):
+        data = self.model.objects.all()
+        serializer = ArtistSerializer(data, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = ArtistSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
 
 
 class createArtist(View):
