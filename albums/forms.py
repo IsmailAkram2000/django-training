@@ -21,4 +21,3 @@ class albumForm(forms.ModelForm):
         if(cost <= 0):
             raise forms.ValidationError('The cost must be larger than 0.')
         return cost
-            
