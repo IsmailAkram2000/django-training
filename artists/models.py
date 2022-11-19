@@ -1,6 +1,8 @@
 from django.db import models
+from users.models import User
 
 class Artist(models.Model):
+    user = models.OneToOneField(User, on_delete = models.CASCADE, null=True)
     Stage_name = models.CharField(unique = True, max_length = 100)
     Social_link = models.URLField(blank = True, default = "")
 

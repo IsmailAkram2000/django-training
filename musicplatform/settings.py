@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'imagekit',
     'knox',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -132,5 +133,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',)
+    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',), 
 }
+
