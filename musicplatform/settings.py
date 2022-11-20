@@ -6,22 +6,25 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
 import os
+import environ
 from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env')) 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-1j735!+^$zez_fgbe%kl5uou*k7qg54xfhi8ost$*vxcq2l!ei'
+SECRET_KEY = env('SECRET_KEY') 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG') 
 
 ALLOWED_HOSTS = []
 
@@ -44,6 +47,7 @@ INSTALLED_APPS = [
     'imagekit',
     'knox',
     'django_filters',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +141,20 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',), 
 }
 
+# CELERY SETTINGS
+CELERY_BROKER_URL = env('REDIS_BROKER_URL')
+CELERY_RESULT_BACKEND = env('REDIS__RESULT_BACKEND')
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_CONF_TIMEZONE = 'Africa/Cairo'
+CELERY_CONF_ACCEPT_CONTENT = ['application/json'] 
+
+# SMTP SETTINGS
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+DEFAULT_FROM_EMAIL = env('EMAIL_HOST_USER') 
