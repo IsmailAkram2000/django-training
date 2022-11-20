@@ -5,6 +5,9 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 from django.core.validators import FileExtensionValidator
 from django.core.exceptions import ValidationError
+from albums.tasks import send_mail_task
+from django.dispatch import receiver 
+from django.db.models.signals import post_save 
 
 class Albums(TimeStampedModel):
     artist = models.ForeignKey(Artist, on_delete = models.CASCADE, null = True)
@@ -15,6 +18,10 @@ class Albums(TimeStampedModel):
 
     def __str__(self):
         return f"name: {self.name}, release_date: {self.release_date}, cost: {self.cost}"
+
+@receiver(post_save, sender=Albums)
+def album_post_save(sender, instance,  *args, **kwargs):
+    send_mail_task.delay(instance.name, instance.artist.id) 
 
 class Song(models.Model):
     album = models.ForeignKey(Albums, on_delete=models.CASCADE)
